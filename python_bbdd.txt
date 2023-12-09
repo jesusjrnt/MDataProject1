@@ -1,0 +1,30 @@
+GENERAR DATAFRAME CON DATOS ALEATORIOS DE PERSONAS DE ESPAÑA
+01
+Instalamos Anaconda Navigator en nuestro ordenador para no tener que instalar las librerías más usadas manualmente tipo pandas o faker.
+02
+Importamos las librerías pandas y random para poder generar y almacenar en un dataframe de pandas datos.
+Utilizamos faker para datos random y datetime para poder generar fechas
+03
+Le pedimos a faker que nos de datos de España, para que los nombres y apellidos sean más típicos de aquí
+04
+Para generar el DNI tenemos que generar un número aleatorio de 8 dígitos y añadirle una de las 26 letras del abecedario de forma aleatoria
+05
+Definimos las provincias de España: Para las provincias simplemente le listamos las 52 provincias de España tal y como nosotros hemos definido
+06
+- Después de importar hemos visto los campos iniciales que nos da y definimos los que necesitamos: separamos nombre y apellidos (apellido1 y apellido2), generamos dni, provincia, etc.
+- La edad la vamos a tener en dos formatos: edad (en años) y edad_dias (en dias) - Los cálculos se harán en días y en años es simplemente a nivel visual para facilitar comprensión.
+- Para calcular la edad en días tenemos que restar fecha actual y fecha de nacimiento. Para poder hacerlo hemos tenido que convertir los campos en el mismo tipo de objeto datetime.date
+- Para el campo Enfermedad Terminal el porcentaje que lo representa. Según un artículo del país son 200.000 personas (https://elpais.com/sociedad/2009/05/28/actualidad/1243461607_850215.html)
+- El porcentaje de terminales es 0,4216%; así que la bbdd tendrá un 0,4216% de probabilidad de incluir uno.
+- El periodo de enf ermedad terminal no puede ser mayor a 6 meses (180 días). Fuente: Elsevier España, S.L.U. (2021). El período de agonía. Gaceta Mexicana de Oncología, 20(4), e305-e308. (https://www.elsevier.es/es-revista-gaceta-mexicana-oncologia-305-articulo-el-periodo-agonia-X1665920113269854)
+- Para programarlo queremos: añadir un campo de valor numérico en días que se llame "Enfermedad terminal en días", en el que los datos puedan ir entre 0 y 180 días. Si 'Enfermedad terminal' es 0, "Enfermedad terminal en días" será 0. Si no, se genera un número aleatorio
+- EL campo "fecha último viaje realizado" Como mínimo va a ser 7 días antes de la fecha actual. y como máximos será 2 años (730 días), para tener datos lógicos. (en las condiciones luego la máxima puntuacion es 365 días)
+- El campo "fecha cancelación" es una fecha aleatoria con un intervalo entre 7 días y 730 días antes de la fecha actual. Este campo estará vacío el 99% de las veces.(esto lo definimos nosotros para tener datos con sentido)
+07
+Generamos datos random para cada campo utilizando Bucles
+08
+Generamos un diccionario con todos los datos
+09
+Creamos dataframe para la generación de datos aleatorios
+10
+Imprimir el dataframe (o df) para visualizar los datos que tenemos

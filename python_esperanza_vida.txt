@@ -1,0 +1,9 @@
+GENERAR DATAFRAME A PARTIR DEL DATA SET OBTENIDO EN EL INE (ESPERANZA DE VIDA POR PROVINCIA)
+01
+Listamos las provincias y le ponemos un ID a cada provincia del 101 al 152
+02
+Añadimos los datos obtenidos de la esperanza de vida para cada provincia
+03
+creamos el dataframe que llamamos df_esperanza_vida
+04
+Imprimimos el dataframe para confirmar que se ve todo bien
