@@ -2,6 +2,8 @@ import pandas as pd
 import random
 from faker import Faker
 from datetime import datetime, timedelta
+import numpy as np  # Para poder ponderar los sexos
+
 
 # Le pedimos a faker que nos de datos de España, para que los nombres y apellidos sean más típicos de aquí
 fake = Faker('es_ES')  # 'es_ES' es el código para España en Faker
@@ -19,6 +21,8 @@ provincias_espana = [
         'Melilla', 'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Palmas, Las', 'Pontevedra', 'Salamanca', 'Santa Cruz de Tenerife', 
         'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Zamora', 'Zaragoza'
 ]
+# Lista de sexos
+sexos = ['Hombre', 'Mujer']
 
 # Necesitamos generar un diccionario con el id_provincia correspondiente para cada Provincia, desde Álava que es el 101 a Zaragoza que es el 152.
 id_provincia = {
@@ -38,6 +42,7 @@ id_provincia = {
 nombres = []
 apellido1 = []
 apellido2 = []
+sexo = []
 correos = []
 fecha_nacimiento = []
 ano_nacimiento = []
@@ -55,7 +60,14 @@ d_vida_domestica = []
 
 # Generamos datos aleatorios y los agregamos a las listas
 for _ in range(1500):  # Cambia el número para generar 1500 registros
-    nombre = fake.first_name()
+    datos_sexo = np.random.choice(['Hombre', 'Mujer'], p=[0.41, 0.59]) # Con esto tendremos el 59% de mujeres y el 41% de hombres
+    sexo.append(datos_sexo)
+
+    if datos_sexo=="Hombre":
+        nombre = fake.first_name_male()
+    else:
+        nombre = fake.first_name_female()
+    
     nombres.append(nombre)
 
     primer_apellido = fake.last_name()
@@ -63,6 +75,8 @@ for _ in range(1500):  # Cambia el número para generar 1500 registros
 
     segundo_apellido = fake.last_name()
     apellido2.append(segundo_apellido)
+
+
     
     fecha_nac = fake.date_of_birth(minimum_age=18, maximum_age=120)  # Generamos una fecha de nacimiento aleatoria
     fecha_nacimiento.append(datetime.strptime(fecha_nac.strftime('%Y-%m-%d'), '%Y-%m-%d').date())  # Convertimos a datetime.date
@@ -140,6 +154,7 @@ data = {
     'Nombre': nombres,
     'Apellido1': apellido1,
     'Apellido2': apellido2,
+    'Sexo': sexo,
     'Fecha de nacimiento': fecha_nacimiento,
     'Año de nacimiento': ano_nacimiento,
     'Correo': correos,
@@ -177,5 +192,5 @@ df_bbdd['id_usuario'] = [f'{i+1:04}' for i in range(len(df_bbdd))]
 print(df_bbdd)
 
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
-# pd.set_option('display.max_columns', None)
-# print(df_bbdd)
+pd.set_option('display.max_columns', None)
+print(df_bbdd)
