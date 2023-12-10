@@ -13,14 +13,26 @@ def calcular_letra(numero_dni):
 
 # Lista de provincias en España
 provincias_espana = [
-    'Álava', 'Albacete', 'Alicante', 'Almería', 'Ávila', 'Badajoz', 'Balears, Illes', 'Barcelona',
-    'Burgos', 'Cáceres', 'Cádiz', 'Castellón', 'Ciudad Real', 'Córdoba', 'Coruña, A', 'Cuenca',
-    'Girona', 'Granada', 'Guadalajara', 'Gipuzkoa', 'Huelva', 'Huesca', 'Jaén', 'León', 'Lleida',
-    'La Rioja', 'Lugo', 'Madrid', 'Málaga', 'Murcia', 'Navarra', 'Ourense', 'Asturias', 'Palencia',
-    'Palmas, Las', 'Pontevedra', 'Salamanca', 'Santa Cruz de Tenerife', 'Cantabria', 'Segovia',
-    'Sevilla', 'Soria', 'Tarragona', 'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Bizkaia',
-    'Zamora', 'Zaragoza', 'Ceuta', 'Melilla'
+    'Álava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Ávila', 'Badajoz', 'Balears, Illes', 'Barcelona', 'Bizkaia',
+        'Burgos', 'Cáceres', 'Cádiz', 'Cantabria', 'Castellón', 'Ceuta', 'Ciudad Real', 'Córdoba', 'Coruña, A', 'Cuenca', 'Gipuzkoa',
+        'Girona', 'Granada', 'Guadalajara', 'Huelva', 'Huesca', 'Jaén', 'La Rioja', 'León', 'Lleida', 'Lugo', 'Madrid', 'Málaga', 
+        'Melilla', 'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Palmas, Las', 'Pontevedra', 'Salamanca', 'Santa Cruz de Tenerife', 
+        'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Zamora', 'Zaragoza'
 ]
+
+# Necesitamos generar un diccionario con el id_provincia correspondiente para cada Provincia, desde Álava que es el 101 a Zaragoza que es el 152.
+id_provincia = {
+    'Álava': 101, 'Albacete': 102, 'Alicante': 103, 'Almería': 104, 'Asturias': 105, 'Ávila': 106,
+    'Badajoz': 107, 'Balears, Illes': 108, 'Barcelona': 109, 'Bizkaia': 110, 'Burgos': 111,
+    'Cáceres': 112, 'Cádiz': 113, 'Cantabria': 114, 'Castellón': 115, 'Ceuta': 116, 'Ciudad Real': 117,
+    'Córdoba': 118, 'Coruña, A': 119, 'Cuenca': 120, 'Gipuzkoa': 121, 'Girona': 122, 'Granada': 123,
+    'Guadalajara': 124, 'Huelva': 125, 'Huesca': 126, 'Jaén': 127, 'La Rioja': 128, 'León': 129,
+    'Lleida': 130, 'Lugo': 131, 'Madrid': 132, 'Málaga': 133, 'Melilla': 134, 'Murcia': 135,
+    'Navarra': 136, 'Ourense': 137, 'Palencia': 138, 'Palmas, Las': 139, 'Pontevedra': 140,
+    'Salamanca': 141, 'Santa Cruz de Tenerife': 142, 'Segovia': 143, 'Sevilla': 144, 'Soria': 145,
+    'Tarragona': 146, 'Teruel': 147, 'Toledo': 148, 'Valencia': 149, 'Valladolid': 150, 'Zamora': 151,
+    'Zaragoza': 152
+}
 
 # Creamos listas para cada campo
 nombres = []
@@ -42,17 +54,16 @@ d_audicion = []
 d_vida_domestica = []
 
 # Generamos datos aleatorios y los agregamos a las listas
-for _ in range(10):  # Cambia el número para generar 10 registros
-    nombre_completo = fake.name().split()  # Obtenemos el nombre y lo divididimos en nombre, apellido1 y apellido2
-    nombres.append(nombre_completo[0])  # Primer nombre
-    if len(nombre_completo) > 1:
-        apellido1.append(nombre_completo[1])  # Primer apellido
-    else:
-        apellido1.append("")
-    if len(nombre_completo) > 2:
-        apellido2.append(nombre_completo[2])  # Segundo apellido
-    else:
-        apellido2.append("")
+for _ in range(1500):  # Cambia el número para generar 1500 registros
+    nombre = fake.first_name()
+    nombres.append(nombre)
+
+    primer_apellido = fake.last_name()
+    apellido1.append(primer_apellido)
+
+    segundo_apellido = fake.last_name()
+    apellido2.append(segundo_apellido)
+    
     fecha_nac = fake.date_of_birth(minimum_age=18, maximum_age=120)  # Generamos una fecha de nacimiento aleatoria
     fecha_nacimiento.append(datetime.strptime(fecha_nac.strftime('%Y-%m-%d'), '%Y-%m-%d').date())  # Convertimos a datetime.date
     ano_nacimiento.append(fecha_nac.strftime('%Y'))  # Añade el año de nacimiento
@@ -64,14 +75,26 @@ for _ in range(10):  # Cambia el número para generar 10 registros
     letra_dni = calcular_letra(numero_dni)  # Calculamos la letra correspondiente
     dni_completo = f"{numero_dni}-{letra_dni}"
     dnis.append(dni_completo)
-    d_movilidad.append(random.randint(0, 100))
-    d_aprendizaje.append(random.randint(0, 100))
-    d_comunicacion.append(random.randint(0, 100))
-    d_relaciones_sociales.append(random.randint(0, 100))
-    d_autocuidado.append(random.randint(0, 100))
-    d_vision.append(random.randint(0, 100))
-    d_audicion.append(random.randint(0, 100))
-    d_vida_domestica.append(random.randint(0, 100))
+
+    probabilidad_discapacidad = random.random()
+    if probabilidad_discapacidad <= 0.9076:
+        d_aprendizaje.append(0)
+        d_audicion.append(0)
+        d_autocuidado.append(0)
+        d_comunicacion.append(0)
+        d_movilidad.append(0)
+        d_relaciones_sociales.append(0)
+        d_vida_domestica.append(0)
+        d_vision.append(0)
+    else:
+        d_aprendizaje.append(random.randint(0, 100) if random.random() > 0.9316 else 0)
+        d_audicion.append(random.randint(0, 100) if random.random() > 0.8808 else 0)
+        d_autocuidado.append(random.randint(0, 100) if random.random() > 0.8678 else 0)
+        d_comunicacion.append(random.randint(0, 100) if random.random() > 0.9082 else 0)
+        d_movilidad.append(random.randint(0, 100) if random.random() > 0.7670 else 0)
+        d_relaciones_sociales.append(random.randint(0, 100) if random.random() > 0.9411 else 0)
+        d_vida_domestica.append(random.randint(0, 100) if random.random() > 0.8054 else 0)
+        d_vision.append(random.randint(0, 100) if random.random() > 0.8981 else 0)
 
 # Convertir la fecha actual a datetime.date
 fecha_actual = datetime.now().date()
@@ -92,14 +115,14 @@ for fecha_nac in fecha_nacimiento:
     edad.append(resta_años)
 
 # Asignamos una probabilidad del 0,4216% de tener enfermedad terminal; valores sí/no.
-enfermedad_terminal = ['Sí' if random.random() < 0.004216 else 'No' for _ in range(10)]
+enfermedad_terminal = ['Sí' if random.random() < 0.004216 else 'No' for _ in range(1500)]
 
 # Una enfermedad terminal va de 1 a 180 días
 enfermedad_terminal_dias = [random.randint(0, 180) if enfermedad == 'Sí' else 0 for enfermedad in enfermedad_terminal]
 
 # Calculamos la fecha del último viaje realizado, con dos condiciones: más de 7 días desde fecha actual y menos de 730 días (2 años)
 fecha_ultimo_viaje = []
-for _ in range(10):
+for _ in range(1500):
     fecha_minima = datetime.now() - timedelta(days=7)
     fecha_maxima = datetime.now() - timedelta(days=730)
 
@@ -107,11 +130,10 @@ for _ in range(10):
     fecha_ultimo_viaje.append(datetime.strptime(fecha_viaje.strftime('%Y-%m-%d'), '%Y-%m-%d').date())
 
 # Creamos el campo de valoración del 1 al 100 puntos (esto nos viene dado random)
-valoracion_usuario = [random.randint(0, 100) for _ in range(10)]
+valoracion_usuario = [random.randint(0, 100) for _ in range(1500)]
 
 # Calculamos la fecha de la última cancelación, aunque solo existirá el 1% de las veces. (esto lo definimos nosotros)
-fecha_cancelacion = [datetime.now() - timedelta(days=random.randint(7, 730)) if random.random() < 0.01 else None for _ in range(10)]
-
+fecha_cancelacion = [datetime.now() - timedelta(days=random.randint(7, 730)) if random.random() < 0.01 else None for _ in range(1500)]
 
 # Creamos un diccionario con los datos
 data = {
@@ -124,14 +146,14 @@ data = {
     'Teléfono': telefono,
     'Provincia': provincias,
     'DNI': dnis,
-    'D_Movilidad': d_movilidad,
     'D_Aprendizaje': d_aprendizaje,
-    'D_Comunicación': d_comunicacion,
-    'D_Relaciones sociales': d_relaciones_sociales,
-    'D_Autocuidado': d_autocuidado,
-    'D_Visión': d_vision,
     'D_Audición': d_audicion,
+    'D_Autocuidado': d_autocuidado,
+    'D_Comunicación': d_comunicacion,
+    'D_Movilidad': d_movilidad,
+    'D_Relaciones sociales': d_relaciones_sociales,
     'D_Vida doméstica': d_vida_domestica,
+    'D_Visión': d_vision,
     'Edad en días': edades_en_dias,
     'Edad': edad,
     'Enfermedad terminal': enfermedad_terminal,
@@ -142,10 +164,15 @@ data = {
 
 }
 
-
-
 # Creamos un DataFrame que llamamos df_bbdd
 df_bbdd = pd.DataFrame(data)
 
+# Creamos una nueva columna 'id_provincia' con valores mapeados usando el diccionario id_provincia
+df_bbdd['id_provincia'] = df_bbdd['Provincia'].map(id_provincia)
+
 # Imprimimos el DataFrame
+print(df_bbdd)
+
+# Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
+pd.set_option('display.max_columns', None)
 print(df_bbdd)

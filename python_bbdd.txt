@@ -20,6 +20,17 @@ Definimos las provincias de España: Para las provincias simplemente le listamos
 - Para programarlo queremos: añadir un campo de valor numérico en días que se llame "Enfermedad terminal en días", en el que los datos puedan ir entre 0 y 180 días. Si 'Enfermedad terminal' es 0, "Enfermedad terminal en días" será 0. Si no, se genera un número aleatorio
 - EL campo "fecha último viaje realizado" Como mínimo va a ser 7 días antes de la fecha actual. y como máximos será 2 años (730 días), para tener datos lógicos. (en las condiciones luego la máxima puntuacion es 365 días)
 - El campo "fecha cancelación" es una fecha aleatoria con un intervalo entre 7 días y 730 días antes de la fecha actual. Este campo estará vacío el 99% de las veces.(esto lo definimos nosotros para tener datos con sentido)
+- La cantidad de gente discapacitada en España son 4,38 millones de una población de 47,42 millones, es decir, un 9,24%.
+- Nuestro dataframe representará una probabilidad del 9,24% de tener alguna discapacidad, es decir, un 90,76% de que todas las discapacidades sean 0.
+- Además dentro de las personas discapacitadas conocemos estas probabilidades de tener cada una:
+d_aprendizaje 6,84%
+d_audicion 11,92%
+d_autocuidado 13,22%
+d_comunicacion 9,18%
+d_movilidad 23,3%
+d_relaciones_sociales 5,89%
+d_vida_domestica 19,46%
+d_vision 10,19%.
 07
 Generamos datos random para cada campo utilizando Bucles
 08
@@ -27,4 +38,7 @@ Generamos un diccionario con todos los datos
 09
 Creamos dataframe para la generación de datos aleatorios
 10
+Para que el campo id_provincia siempre dependa del campo provincia y no varíe, hemos hecho una librería en la que cada provincia tiene una id
+y entonces le sumamos la columna al dataframe, en lugar de generarla directamente junto al dataframe original directamente. (menos complicado)
+11
 Imprimir el dataframe (o df) para visualizar los datos que tenemos
