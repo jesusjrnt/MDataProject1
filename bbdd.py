@@ -170,9 +170,12 @@ df_bbdd = pd.DataFrame(data)
 # Creamos una nueva columna 'id_provincia' con valores mapeados usando el diccionario id_provincia
 df_bbdd['id_provincia'] = df_bbdd['Provincia'].map(id_provincia)
 
+# Creamos una columna 'id_usuario' que asigna un valor incremental desde 0001 hasta el máximo de la base de datos
+df_bbdd['id_usuario'] = [f'{i+1:04}' for i in range(len(df_bbdd))]
+
 # Imprimimos el DataFrame
 print(df_bbdd)
 
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
-pd.set_option('display.max_columns', None)
-print(df_bbdd)
+# pd.set_option('display.max_columns', None)
+# print(df_bbdd)

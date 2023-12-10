@@ -1,3 +1,4 @@
+ARCHIVO bbdd.py
 GENERAR DATAFRAME CON DATOS ALEATORIOS DE PERSONAS DE ESPAÑA
 01
 Instalamos Anaconda Navigator en nuestro ordenador para no tener que instalar las librerías más usadas manualmente tipo pandas o faker.
@@ -42,3 +43,35 @@ Para que el campo id_provincia siempre dependa del campo provincia y no varíe, 
 y entonces le sumamos la columna al dataframe, en lugar de generarla directamente junto al dataframe original directamente. (menos complicado)
 11
 Imprimir el dataframe (o df) para visualizar los datos que tenemos
+
+_________________________________________________________________________
+
+ARCHIVO esperanza_vida.py
+GENERAR DATAFRAME A PARTIR DEL DATA SET OBTENIDO EN EL INE (ESPERANZA DE VIDA POR PROVINCIA Y SEXO)
+01
+Listamos las provincias y le ponemos un ID a cada provincia del 101 al 152
+02
+Añadimos los datos obtenidos de la esperanza de vida para cada provincia según sexo
+03
+creamos el dataframe que llamamos df_esperanza_vida
+04
+Imprimimos el dataframe para confirmar que se ve todo bien
+
+_________________________________________________________________________
+
+ARCHIVO tipo_viaje.py
+GENERAR DATAFRAME CON ID_USUARIO Y LOS 5 ULTIMOS VIAJES REALIZADOS POR FECHA Y TIPO
+01
+Listamos los 4 tipos de viaje posibles
+02
+Generamos los 5 tipos de viaje con fecha y tipo; esto generará dos campos para cada viaje.
+03
+Al generar las fechas ordenamos con SORTED para que vayan por orden cronológico, y el primero siempre sea antes que el segundo, tercero, etc.
+04
+Obtenemos una tabla con id_usuario, 5 tipos de viajes aleatorios con su tipo y fecha. Y no necesariamente han realizado todos.
+05
+Aprovechamos este dataframe para obtener una columna más: fecha_ultimo_viaje; que se calcula cogiendo la fecha más reciente de todos los viajes.
+06
+Aprovechamos este dataframe para obtener una columna más: tipo_ultimo_viaje; que lo coge del viaje más reciente.
+
+_________________________________________________________________________
