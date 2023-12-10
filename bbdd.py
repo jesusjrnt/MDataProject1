@@ -63,8 +63,8 @@ for _ in range(1500):  # Cambia el número para generar 1500 registros
     datos_sexo = np.random.choice(['Hombre', 'Mujer'], p=[0.41, 0.59]) # Con esto tendremos el 59% de mujeres y el 41% de hombres
     sexo.append(datos_sexo)
 
-    if datos_sexo=="Hombre":
-        nombre = fake.first_name_male()
+    if datos_sexo=="Hombre": 
+        nombre = fake.first_name_male() # Así le ponemos nombre de hombre a los que se asignen aleatoriamente como "Hombre"
     else:
         nombre = fake.first_name_female()
     
