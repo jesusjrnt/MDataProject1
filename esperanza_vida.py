@@ -28,3 +28,8 @@ df_esperanza_vida = pd.DataFrame(data_esperanza_vida)
 
 # Imprimir el DataFrame
 print(df_esperanza_vida)
+
+esperanza_csv = 'esperanza.csv'
+df_esperanza_vida.to_csv(esperanza_csv, index=False)
+
+print(f"La base de datos ha sido creada y guardada en '{esperanza_csv}'.")

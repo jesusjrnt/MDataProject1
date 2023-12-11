@@ -194,3 +194,9 @@ print(df_bbdd)
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
 pd.set_option('display.max_columns', None)
 print(df_bbdd)
+
+usuarios_csv = 'base_de_datos.csv'
+df_bbdd.to_csv(usuarios_csv, index=False)
+
+print(f"La base de datos ha sido creada y guardada en '{usuarios_csv}'.")
+
