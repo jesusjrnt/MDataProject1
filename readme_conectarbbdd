@@ -1,0 +1,22 @@
+Instalamos los módulos que necesitamos.
+Estos módulos los necesitamos para pasar la base de datos generada en Python a MySQL para poder visualizarla en phpMyAdmin.
+
+pip install sqlalchemy
+pip install mysql.connector
+
+Para hacer funcionar phpMyAdmin en local necesitamos XAMPP:
+https://www.apachefriends.org/es/download.html
+
+Una vez instalado XAMPP lo abriremos y le pediremos que empiece los siguientes procesos:
+- MySQL Database
+- Apache web server
+
+Entramos en la siguiente página:
+localhost/dashboard
+
+Ahí vamos a phpMyAdmin
+
+usuario: dataproject
+contraseña: dataproject
+host: localhost
+nombre bbdd: dataproject
