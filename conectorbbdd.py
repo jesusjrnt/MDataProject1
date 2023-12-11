@@ -1,5 +1,6 @@
 
 from sqlalchemy import create_engine
+import mysql.connector
 
 # Especifica tus credenciales y detalles de la base de datos MySQL
 usuario = 'dataproject'  # El usuario predeterminado en XAMPP es 'root'
