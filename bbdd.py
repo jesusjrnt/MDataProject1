@@ -78,7 +78,7 @@ for _ in range(1500):  # Cambia el número para generar 1500 registros
 
 
     
-    fecha_nac = fake.date_of_birth(minimum_age=18, maximum_age=120)  # Generamos una fecha de nacimiento aleatoria
+    fecha_nac = fake.date_of_birth(minimum_age=60, maximum_age=120)  # Generamos una fecha de nacimiento aleatoria
     fecha_nacimiento.append(datetime.strptime(fecha_nac.strftime('%Y-%m-%d'), '%Y-%m-%d').date())  # Convertimos a datetime.date
     ano_nacimiento.append(fecha_nac.strftime('%Y'))  # Añade el año de nacimiento
     correos.append(fake.email())
