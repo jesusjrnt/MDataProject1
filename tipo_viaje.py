@@ -54,7 +54,7 @@ numero_registros = 1500  # Número de registros
 df_tipos_viaje = crear_dataframe_viajes(numero_registros)
 
 # Imprimimos el DataFrame
-print(df_tipos_viaje)
+# print(df_tipos_viaje)
 
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
 # pd.set_option('display.max_columns', None)

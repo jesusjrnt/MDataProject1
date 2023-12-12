@@ -26,5 +26,5 @@ data_esperanza_vida = {
 # Creamos el DataFrame df_esperanza_vida
 df_esperanza_vida = pd.DataFrame(data_esperanza_vida)
 
-# Imprimir el DataFrame
-print(df_esperanza_vida)
+# Para imprimir el DataFrame
+# print(df_esperanza_vida)
