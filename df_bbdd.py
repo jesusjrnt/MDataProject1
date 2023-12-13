@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import pickle
 from faker import Faker
 from datetime import datetime, timedelta
 import numpy as np  # Para poder ponderar los sexos
@@ -177,6 +178,10 @@ df_bbdd['id_provincia'] = df_bbdd['provincia'].map(id_provincia)
 
 # Creamos una columna 'id_usuario' que asigna un valor incremental desde 0001 hasta el máximo de la base de datos
 df_bbdd['id_usuario'] = [f'{i+1:04}' for i in range(len(df_bbdd))]
+
+# Guardar el DataFrame en un archivo usando pickle
+with open('df_bbdd.pickle', 'wb') as f:
+    pickle.dump(df_bbdd, f)
 
 # Si quisieramos imprimir el DataFrame
 # print(df_bbdd)

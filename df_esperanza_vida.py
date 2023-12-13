@@ -1,4 +1,5 @@
 import pandas as pd
+import pickle
 
 # Datos obtenidos de Data Set fuente: INE https://www.ine.es/jaxi/Tabla.htm?path=/t20/e245/p08/l0/&file=01003.px&L=0
 # Tenemos 52 provincias por lo que tendremos 52 ID de provincia. Asignamos por orden alfabético un ID del 101 al 152.
@@ -28,3 +29,7 @@ df_esperanza_vida = pd.DataFrame(data_esperanza_vida)
 
 # Para imprimir el DataFrame
 # print(df_esperanza_vida)
+
+# Guardar el DataFrame en un archivo usando pickle
+with open('df_esperanza_vida.pickle', 'wb') as f:
+    pickle.dump(df_esperanza_vida, f)

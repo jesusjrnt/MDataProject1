@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import pickle
 from faker import Faker
 
 fake = Faker('es_ES')  # 'es_ES' es el código para España en Faker
@@ -65,6 +66,10 @@ df_proximo_viaje = pd.DataFrame(data, index=[0])
 
 # Creamos una nueva columna 'id_provincia' con valores mapeados usando el diccionario id_provincia
 df_proximo_viaje['id_provincia'] = df_proximo_viaje['provincia'].map(id_provincia)
+
+# Guardar el DataFrame en un archivo usando pickle
+with open('df_proximo_viaje.pickle', 'wb') as f:
+    pickle.dump(df_proximo_viaje, f)
 
 # Mostrar el DataFrame
 # print(df_proximo_viaje)

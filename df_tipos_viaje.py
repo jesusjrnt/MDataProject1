@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import pickle
 from faker import Faker
 
 fake = Faker('es_ES')
@@ -59,3 +60,8 @@ df_tipos_viaje = crear_dataframe_viajes(numero_registros)
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
 # pd.set_option('display.max_columns', None)
 # print(df_tipos_viaje)
+
+# Guardar el DataFrame en un archivo usando pickle
+with open('df_tipos_viaje.pickle', 'wb') as f:
+    pickle.dump(df_tipos_viaje, f)
+

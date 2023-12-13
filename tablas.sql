@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS Tipo_de_viaje (
     tipo_viaje_2 TEXT,
     tipo_viaje_3 TEXT,
     tipo_viaje_4 TEXT,
-    tipo_viaje_5 TEXT 
+    tipo_viaje_5 TEXT
+
 );
 
 CREATE TABLE IF NOT EXISTS Proximo_viaje (
