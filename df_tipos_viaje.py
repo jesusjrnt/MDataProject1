@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import pickle
 from faker import Faker
 
 fake = Faker('es_ES')
@@ -16,11 +17,11 @@ tipos_viaje = [
 def generar_viajes(numero_registros):
     data_viajes = {
         f'fecha_viaje_{i}': ['' for _ in range(numero_registros)]
-        for i in range(1, 6)
+        for i in range(1, 5)
     }
     data_tipos_viaje = {
         f'tipo_viaje_{i}': ['' for _ in range(numero_registros)]
-        for i in range(1, 6)
+        for i in range(1, 5)
     }
     return {**data_viajes, **data_tipos_viaje}
 
@@ -59,3 +60,8 @@ print(df_tipos_viaje)
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
 # pd.set_option('display.max_columns', None)
 # print(df_tipos_viaje)
+
+# Guardar el DataFrame en un archivo usando pickle
+with open('df_tipos_viaje.pickle', 'wb') as f:
+    pickle.dump(df_tipos_viaje, f)
+

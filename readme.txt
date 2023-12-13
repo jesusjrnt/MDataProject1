@@ -106,3 +106,29 @@ usuario: dataproject
 contraseña: dataproject
 host: localhost
 nombre bbdd: dataproject
+
+_________________________________________________________________________
+
+ARCHIVO creacion_tablas.sql
+RESUMEN DE CADA TABLA CREADA
+
+Equilibrio_discapacidad:
+Columnas: id_equilibrio_discapacidad, id_usuario, Movilidad, Aprendizaje, Comunicacion, Relaciones_sociales, Autocuidado, Vision, Audicion, Vida_domestica
+
+Esperanza_de_vida:
+Columnas: id_esperanza_de_vida, id_provincia, provincia, sexo, edad_en_dias, Enfermedad_terminal_en_dias
+
+Diferencia_fechas_viajes:
+Columnas: id_diferencia_fechas_viajes, id_usuario, fecha_ultimo_viaje
+
+Compromiso_usuario:
+Columnas: id_compromiso_usuario, id_usuario, valoracion_usuario, fecha_cancelacion
+
+Promocion_Movilidad:
+Columnas: id_promocion_movilidad, id_usuario, id_provincia
+
+Tipo_de_viaje:
+Columnas: id_tipo_de_viaje, id_usuario, tipo_viaje_1, tipo_viaje_2, tipo_viaje_3, tipo_viaje_4, tipo_viaje_5
+
+Proximo_viaje:
+Columnas: id_proximo_viaje, id_provincia, provincia, plazas_disponibles, tipo_de_viaje

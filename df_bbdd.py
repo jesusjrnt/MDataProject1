@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import pickle
 from faker import Faker
 from datetime import datetime, timedelta
 import numpy as np  # Para poder ponderar los sexos
@@ -78,7 +79,7 @@ for _ in range(1500):  # Cambia el número para generar 1500 registros
 
 
     
-    fecha_nac = fake.date_of_birth(minimum_age=18, maximum_age=120)  # Generamos una fecha de nacimiento aleatoria
+    fecha_nac = fake.date_of_birth(minimum_age=60, maximum_age=120)  # Generamos una fecha de nacimiento aleatoria
     fecha_nacimiento.append(datetime.strptime(fecha_nac.strftime('%Y-%m-%d'), '%Y-%m-%d').date())  # Convertimos a datetime.date
     ano_nacimiento.append(fecha_nac.strftime('%Y'))  # Añade el año de nacimiento
     correos.append(fake.email())
@@ -134,48 +135,38 @@ enfermedad_terminal = ['Sí' if random.random() < 0.004216 else 'No' for _ in ra
 # Una enfermedad terminal va de 1 a 180 días
 enfermedad_terminal_dias = [random.randint(0, 180) if enfermedad == 'Sí' else 0 for enfermedad in enfermedad_terminal]
 
-# Calculamos la fecha del último viaje realizado, con dos condiciones: más de 7 días desde fecha actual y menos de 730 días (2 años)
-fecha_ultimo_viaje = []
-for _ in range(1500):
-    fecha_minima = datetime.now() - timedelta(days=7)
-    fecha_maxima = datetime.now() - timedelta(days=730)
-
-    fecha_viaje = fake.date_time_between(start_date=fecha_minima, end_date=fecha_maxima)
-    fecha_ultimo_viaje.append(datetime.strptime(fecha_viaje.strftime('%Y-%m-%d'), '%Y-%m-%d').date())
-
 # Creamos el campo de valoración del 1 al 100 puntos (esto nos viene dado random)
 valoracion_usuario = [random.randint(0, 100) for _ in range(1500)]
 
 # Calculamos la fecha de la última cancelación, aunque solo existirá el 1% de las veces. (esto lo definimos nosotros)
-fecha_cancelacion = [datetime.now() - timedelta(days=random.randint(7, 730)) if random.random() < 0.01 else None for _ in range(1500)]
+fecha_cancelacion = [(datetime.now() - timedelta(days=random.randint(7, 730))).strftime('%Y-%m-%d') if random.random() < 0.01 else None for _ in range(1500)]
 
 # Creamos un diccionario con los datos
 data = {
-    'Nombre': nombres,
-    'Apellido1': apellido1,
-    'Apellido2': apellido2,
-    'Sexo': sexo,
-    'Fecha de nacimiento': fecha_nacimiento,
-    'Año de nacimiento': ano_nacimiento,
-    'Correo': correos,
-    'Teléfono': telefono,
-    'Provincia': provincias,
-    'DNI': dnis,
-    'D_Aprendizaje': d_aprendizaje,
-    'D_Audición': d_audicion,
-    'D_Autocuidado': d_autocuidado,
-    'D_Comunicación': d_comunicacion,
-    'D_Movilidad': d_movilidad,
-    'D_Relaciones sociales': d_relaciones_sociales,
-    'D_Vida doméstica': d_vida_domestica,
-    'D_Visión': d_vision,
-    'Edad en días': edades_en_dias,
-    'Edad': edad,
-    'Enfermedad terminal': enfermedad_terminal,
-    'Enfermedad terminal en días': enfermedad_terminal_dias,
-    'Fecha último viaje realizado': fecha_ultimo_viaje,
-    'Valoración usuario': valoracion_usuario,
-    'Fecha cancelación': fecha_cancelacion
+    'nombre': nombres,
+    'apellido1': apellido1,
+    'apellido2': apellido2,
+    'sexo': sexo,
+    'fecha_nacimiento': fecha_nacimiento,
+    'ano_nacimiento': ano_nacimiento,
+    'email': correos,
+    'telefono': telefono,
+    'provincia': provincias,
+    'nif': dnis,
+    'd_aprendizaje': d_aprendizaje,
+    'd_audicion': d_audicion,
+    'd_autocuidado': d_autocuidado,
+    'd_comunicacion': d_comunicacion,
+    'd_movilidad': d_movilidad,
+    'd_relaciones_sociales': d_relaciones_sociales,
+    'd_vida_domestica': d_vida_domestica,
+    'd_vision': d_vision,
+    'edad_en_dias': edades_en_dias,
+    'edad': edad,
+    'enfermedad_terminal': enfermedad_terminal,
+    'enfermedad_terminal_en_dias': enfermedad_terminal_dias,
+    'valoracion_usuario': valoracion_usuario,
+    'fecha_cancelacion': fecha_cancelacion
 
 }
 
@@ -183,20 +174,25 @@ data = {
 df_bbdd = pd.DataFrame(data)
 
 # Creamos una nueva columna 'id_provincia' con valores mapeados usando el diccionario id_provincia
-df_bbdd['id_provincia'] = df_bbdd['Provincia'].map(id_provincia)
+df_bbdd['id_provincia'] = df_bbdd['provincia'].map(id_provincia)
 
 # Creamos una columna 'id_usuario' que asigna un valor incremental desde 0001 hasta el máximo de la base de datos
 df_bbdd['id_usuario'] = [f'{i+1:04}' for i in range(len(df_bbdd))]
 
-# Imprimimos el DataFrame
+# Guardar el DataFrame en un archivo usando pickle
+with open('df_bbdd.pickle', 'wb') as f:
+    pickle.dump(df_bbdd, f)
+
+# Si quisieramos imprimir el DataFrame
 print(df_bbdd)
 
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
+#<<<<<<< HEAD:bbdd.py
 pd.set_option('display.max_columns', None)
 print(df_bbdd)
 
-usuarios_csv = 'base_de_datos.csv'
-df_bbdd.to_csv(usuarios_csv, index=False)
 
-print(f"La base de datos ha sido creada y guardada en '{usuarios_csv}'.")
+# Guardar el DataFrame en un archivo CSV
+df_bbdd.to_csv('base_de_datos.csv', index=False)
+
 
