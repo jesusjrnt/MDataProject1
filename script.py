@@ -29,8 +29,11 @@ with open('df_proximo_viaje.pickle', 'rb') as f:
 with open('df_tipos_viaje.pickle', 'rb') as f:
     df_tipos_viaje = pickle.load(f)
 
-# Insertar el DataFrame df_bbdd en la tabla de la base de datos (PERO ESTO NO FUNCIONA)
-df_bbdd.to_sql('Tipo_de_viaje', con=engine, if_exists='append', index=False)
+# Seleccionar la columna 'tipo_viaje_1' del DataFrame df_tipos_viaje
+columna_tipo_viaje_1 = df_tipos_viaje['tipo_viaje_1']
+
+# Insertar la columna 'tipo_viaje_1' en la tabla 'tabla_tipo_de_viaje' en la base de datos
+columna_tipo_viaje_1.to_sql('tabla_tipo_de_viaje', con=engine, if_exists='append', index=False)
 
 # Cierra la conexión después de realizar la inserción
 engine.dispose()
