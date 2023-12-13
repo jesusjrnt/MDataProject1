@@ -66,3 +66,12 @@ CREATE TABLE IF NOT EXISTS tabla_proximo_viaje (
     plazas_disponibles INT,
     tipo_de_viaje TEXT
 );
+
+CREATE TABLE IF NOT EXISTS tabla_puntos (
+    id_puntos INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario CHAR(4),
+    puntos_discapacidad INT,
+    puntos_esperanza INT,
+    puntos_diferencia_viajes INT,
+    puntos_compromiso INT
+);

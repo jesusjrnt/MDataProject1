@@ -45,13 +45,15 @@ for col, mult in multiplicadores.items():
 data['puntos_discapacidad'] = data[list(multiplicadores.keys())].max(axis=1)
 
 # Multiplicar la columna 'puntos_discapacidad' por 0.25
-data['puntos_discapacidad'] *= 0.25
+data['puntos_discapacidad'] *= 0.35
 
 # Ordenar el DataFrame por la columna 'puntos_discapacidad' de mayor a menor
 data = data.sort_values(by='puntos_discapacidad', ascending=False)
 
+data['id_usuario'] = [f'{i+1:04}' for i in range(len(data))]
+
 # Mostrar el DataFrame ordenado por 'puntos_discapacidad'
-print(data[['puntos_discapacidad']])
+print(data[['puntos_discapacidad', 'id_usuario']])
 
 # Leer las tablas desde SQL
 tabla_esperanza_de_vida_provincia_sexo = pd.read_sql_table('tabla_esperanza_de_vida_provincia_sexo', engine)
@@ -113,10 +115,13 @@ merged_data['puntos_esperanza'] = merged_data.apply(calcular_puntos_esperanza, a
 merged_data['puntos_esperanza'] = merged_data['puntos_esperanza'].clip(upper=100)
 
 # Multiplicar 'puntos_esperanza' por 0.15
-merged_data['puntos_esperanza'] *= 0.15
+merged_data['puntos_esperanza'] *= 0.25
+
+
+merged_data['id_usuario'] = [f'{i+1:04}' for i in range(len(merged_data))]
 
 # Mostrar el resultado con los campos relevantes
-print(merged_data[['puntos_esperanza']])
+print(merged_data[['puntos_esperanza', 'id_usuario']])
 
 #################################-----VIAJES--------###############################
 
@@ -138,9 +143,13 @@ datos['puntos_diferencia_viajes'] = datos['diferencia_dias'] * 0.2739726  # Mult
 
 # Aplicar la condición de asignar 100 puntos si la diferencia es mayor a 365
 datos.loc[datos['diferencia_dias'] > 365, 'puntos_diferencia_viajes'] = 100
-datos['puntos_diferencia_viajes'] *= 0.1  # Multiplicar por 0.1
+datos['puntos_diferencia_viajes'] *= 0.15  # Multiplicar por 0.1
+
+
+datos['id_usuario'] = [f'{i+1:04}' for i in range(len(datos))]
+
 # Mostrar los resultados
-print(datos[['puntos_diferencia_viajes']])
+print(datos[['puntos_diferencia_viajes', 'id_usuario']])
 
 ################################-----COMPROMISO---###########################
 
@@ -148,39 +157,50 @@ print(datos[['puntos_diferencia_viajes']])
 consulta_sql = "SELECT valoracion_usuario, fecha_cancelacion FROM tabla_compromiso_usuario"
 
 # Ejecutar la consulta y obtener los datos en un DataFrame de pandas
-datos = pd.read_sql_query(consulta_sql, engine)
+datos_compromiso = pd.read_sql_query(consulta_sql, engine)
 
 # Obtener la fecha de hoy
 fecha_hoy = datetime.datetime.now()
 
 # Calcular la diferencia entre la fecha actual y 'fecha_cancelacion'
-datos['fecha_cancelacion'] = pd.to_datetime(datos['fecha_cancelacion'])  # Convertir la columna a tipo datetime si no está en ese formato
-datos['diferencia_dias'] = (fecha_hoy - datos['fecha_cancelacion']).dt.days  # Calcular la diferencia en días
+datos_compromiso['fecha_cancelacion'] = pd.to_datetime(datos_compromiso['fecha_cancelacion'])  # Convertir la columna a tipo datetime si no está en ese formato
+datos_compromiso['diferencia_dias'] = (fecha_hoy - datos_compromiso['fecha_cancelacion']).dt.days  # Calcular la diferencia en días
 
 # Calcular la variable 'cancelacion' según las condiciones dadas
-datos['cancelacion'] = datos['diferencia_dias'].apply(lambda x: 0 if x <= 180 else 100)
+datos_compromiso['cancelacion'] = datos_compromiso['diferencia_dias'].apply(lambda x: 0 if x <= 180 else 100)
 
 # Calcular la variable 'puntos_compromiso' según la fórmula dada
-datos['puntos_compromiso'] = datos['valoracion_usuario'] * 0.7 + datos['cancelacion'] * 0.3
-datos['puntos_compromiso'] *= 0.2
+datos_compromiso['puntos_compromiso'] = datos_compromiso['valoracion_usuario'] * 0.7 + datos_compromiso['cancelacion'] * 0.3
+datos_compromiso['puntos_compromiso'] *= 0.25
+
+# Creamos una columna 'id_usuario' que asigna un valor incremental desde 0001 hasta el máximo de la base de datos
+
+datos_compromiso['id_usuario'] = [f'{i+1:04}' for i in range(len(datos_compromiso))]
+
+
 # Mostrar los resultados
-print(datos[['puntos_compromiso']])
+print(datos_compromiso[['puntos_compromiso', 'id_usuario']])
 
-################################-----MOVILIDAD---###########################
+# Generar una columna 'id_usuario' común con la longitud máxima de todos los DataFrames
+max_length = max(len(data), len(merged_data), len(datos), len(datos_compromiso))
 
-consulta_sql = '''
-SELECT 
-    CASE 
-        WHEN pm.id_provincia = pv.id_provincia_proximo_viaje THEN 0 
-        ELSE 100 
-    END AS puntos_movilidad
-FROM tabla_promocion_movilidad pm
-JOIN tabla_proximo_viaje pv ON pm.id_usuario = pv.id_usuario
-'''
+# Crear una serie con valores incrementalmente asignados a 'id_usuario'
+id_usuario_comun = pd.Series([f'{i+1:04}' for i in range(max_length)], name='id_usuario')
 
-# Ejecutar la consulta y obtener los datos en un DataFrame de pandas
-datos = pd.read_sql_query(consulta_sql, engine)
-datos['puntos_movilidad'] *= 0.15
+# Asignar la serie 'id_usuario_comun' a cada DataFrame
+data['id_usuario'] = id_usuario_comun
+merged_data['id_usuario'] = id_usuario_comun
+datos['id_usuario'] = id_usuario_comun
+datos_compromiso['id_usuario'] = id_usuario_comun
 
-# Imprimir los resultados de la variable 'puntos_movilidad'
-print(datos['puntos_movilidad'])
+# Unir todos los DataFrames en uno solo
+all_data = pd.concat([data[['puntos_discapacidad', 'id_usuario']],
+                      merged_data[['puntos_esperanza', 'id_usuario']],
+                      datos[['puntos_diferencia_viajes', 'id_usuario']],
+                      datos_compromiso[['puntos_compromiso', 'id_usuario']]])
+
+# Insertar los datos en la tabla 'tabla_puntos'
+all_data.to_sql('tabla_puntos', con=engine, if_exists='replace', index=False)
+
+
+
