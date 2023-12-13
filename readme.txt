@@ -76,36 +76,17 @@ Aprovechamos este dataframe para obtener una columna más: tipo_ultimo_viaje; qu
 
 _________________________________________________________________________
 
-ARCHIVO conectorbbdd.py
+ARCHIVO docker-compose.yml
 
 01
-Instalamos los módulos que necesitamos.
-Estos módulos los necesitamos para pasar la base de datos generada en Python a MySQL para poder visualizarla en phpMyAdmin.
-
-pip install sqlalchemy
-pip install mysql.connector
+Compose iup para poner en marcha MySQL y phpMyAdmin
 
 02
-Para hacer funcionar phpMyAdmin en local necesitamos XAMPP:
-https://www.apachefriends.org/es/download.html
+Vamos a localhost:8080
 
 03
-Una vez instalado XAMPP lo abriremos y le pediremos que empiece los siguientes procesos:
-- MySQL Database
-- Apache web server
-
-04
-Entramos en la siguiente página:
-localhost/dashboard
-
-05
-Ahí vamos a phpMyAdmin
-
-06
-usuario: dataproject
-contraseña: dataproject
-host: localhost
-nombre bbdd: dataproject
+user: user
+password:password
 
 _________________________________________________________________________
 
