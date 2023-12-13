@@ -184,8 +184,15 @@ with open('df_bbdd.pickle', 'wb') as f:
     pickle.dump(df_bbdd, f)
 
 # Si quisieramos imprimir el DataFrame
-# print(df_bbdd)
+print(df_bbdd)
 
 # Si quisieramos ver todas las columnas sin truncar, podemos usar lo siguiente:
-# pd.set_option('display.max_columns', None)
-# print(df_bbdd)
+#<<<<<<< HEAD:bbdd.py
+pd.set_option('display.max_columns', None)
+print(df_bbdd)
+
+
+# Guardar el DataFrame en un archivo CSV
+df_bbdd.to_csv('base_de_datos.csv', index=False)
+
+

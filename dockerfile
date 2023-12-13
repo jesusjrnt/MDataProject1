@@ -12,11 +12,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your application's code to the container
 
+COPY códigobbdd.py ./
 COPY df_bbdd.py ./
 COPY df_esperanza_vida.py ./
 COPY df_proximo_viaje.py ./
 COPY df_tipos_viaje.py ./
+COPY df_suma_puntos.py ./
 COPY script.py ./
 
 # Command to run the script when the container starts
-ENTRYPOINT ["python","./df_bbdd.py","./df_espezanza_vida.py", "./df_proximo_viaje.py", "./df_tipos_viaje.py", "./script.py"]
+ENTRYPOINT ["python","./códigobbdd.py","./df_bbdd.py","./df_espezanza_vida.py", "./df_proximo_viaje.py", "./df_tipos_viaje.py","./df_suma_puntos.py", "./script.py"]

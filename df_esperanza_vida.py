@@ -27,8 +27,6 @@ data_esperanza_vida = {
 # Creamos el DataFrame df_esperanza_vida
 df_esperanza_vida = pd.DataFrame(data_esperanza_vida)
 
-# Para imprimir el DataFrame
-# print(df_esperanza_vida)
 
 # Guardar el DataFrame en un archivo usando pickle
 with open('df_esperanza_vida.pickle', 'wb') as f:
