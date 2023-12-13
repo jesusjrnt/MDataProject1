@@ -22,8 +22,38 @@ provincias_espana = [
         'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Zamora', 'Zaragoza'
 ]
 
+provincia_proximo_viaje = fake.random_element(provincias_espana)  # Seleccionamos una provincia
+provincias = [provincia_proximo_viaje] * 1500
+
+tipos_viaje = []
+
+for _ in range(1500):  # Cambia el número para generar un único próximo viaje
+
+    if provincia_proximo_viaje == "Balears, Illes":  
+        tipo_viaje = 'Costa insular - Baleares'
+    elif provincia_proximo_viaje in ["Santa Cruz de Tenerife", "Palmas, Las"]:
+        tipo_viaje = 'Costa insular - Canarias'
+    elif provincia_proximo_viaje in ["Alicante", "Valencia", "Castellón", "Murcia", "Tarragona", "Barcelona", "Girona", "Lleida", "Huelva", "Granada", "Sevilla", "Córdoba", "Jaén", "Cádiz", "Málaga", "Almería"]:
+        tipo_viaje = 'Costa peninsular'
+    else:
+        tipo_viaje = 'Turismo de escapada'
+
+    tipos_viaje.append(tipo_viaje)
+
+
+# Generar datos simulados para el próximo viaje
+data = {
+    'provincia_proximo_viaje': provincias,
+    'tipo_de_viaje': tipos_viaje,
+    'plazas_disponibles': 50  # Establecer el número de plazas disponibles para el viaje (en este caso, 50)
+
+}
+
+# Crear el DataFrame
+df_proximo_viaje = pd.DataFrame(data)
+
 # Necesitamos generar un diccionario con el id_provincia correspondiente para cada Provincia, desde Álava que es el 101 a Zaragoza que es el 152.
-id_provincia = {
+id_provincia_proximo_viaje = {
     'Álava': 101, 'Albacete': 102, 'Alicante': 103, 'Almería': 104, 'Asturias': 105, 'Ávila': 106,
     'Badajoz': 107, 'Balears, Illes': 108, 'Barcelona': 109, 'Bizkaia': 110, 'Burgos': 111,
     'Cáceres': 112, 'Cádiz': 113, 'Cantabria': 114, 'Castellón': 115, 'Ceuta': 116, 'Ciudad Real': 117,
@@ -36,40 +66,15 @@ id_provincia = {
     'Zaragoza': 152
 }
 
-provincias = []
-
-for _ in range(1):  # Cambia el número para generar un único próximo viaje
-
-    provincia = fake.random_element(provincias_espana)  # Seleccionamos una provincia
-    provincias.append(provincia)
-
-    if provincia == "Balears, Illes":  
-        tipo_viaje = 'Costa insular - Baleares'
-    elif provincia in ["Santa Cruz de Tenerife", "Palmas, Las"]:
-        tipo_viaje = 'Costa insular - Canarias'
-    elif provincia in ["Alicante", "Valencia", "Castellón", "Murcia", "Tarragona", "Barcelona", "Girona", "Lleida", "Huelva", "Granada", "Sevilla", "Córdoba", "Jaén", "Cádiz", "Málaga", "Almería"]:
-        tipo_viaje = 'Costa peninsular'
-    else:
-        tipo_viaje = 'Turismo de escapada'
-
-
-# Generar datos simulados para el próximo viaje
-data = {
-    'provincia': provincias,
-    'tipo_de_viaje': [tipo_viaje],
-    'plazas_disponibles': 50  # Establecer el número de plazas disponibles para el viaje (en este caso, 50)
-
-}
-
-# Crear el DataFrame
-df_proximo_viaje = pd.DataFrame(data, index=[0])
-
 # Creamos una nueva columna 'id_provincia' con valores mapeados usando el diccionario id_provincia
-df_proximo_viaje['id_provincia'] = df_proximo_viaje['provincia'].map(id_provincia)
+df_proximo_viaje['id_provincia_proximo_viaje'] = df_proximo_viaje['provincia_proximo_viaje'].map(id_provincia_proximo_viaje)
+
+# Creamos una columna 'id_usuario' que asigna un valor incremental desde 0001 hasta el máximo de la base de datos
+df_proximo_viaje['id_usuario'] = [f'{i+1:04}' for i in range(len(df_proximo_viaje))]
 
 # Guardar el DataFrame en un archivo usando pickle
 with open('df_proximo_viaje.pickle', 'wb') as f:
     pickle.dump(df_proximo_viaje, f)
 
 # Mostrar el DataFrame
-# print(df_proximo_viaje)
+print(df_proximo_viaje)

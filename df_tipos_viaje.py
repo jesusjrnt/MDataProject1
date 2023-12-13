@@ -2,6 +2,7 @@ import pandas as pd
 import random
 import pickle
 from faker import Faker
+from datetime import datetime
 
 fake = Faker('es_ES')
 
@@ -53,6 +54,12 @@ def crear_dataframe_viajes(numero_registros):
 
 numero_registros = 1500  # Número de registros
 df_tipos_viaje = crear_dataframe_viajes(numero_registros)
+
+# Obtener la fecha actual
+fecha_actual = datetime.now().date()
+
+# Agregar la columna 'fecha_hoy' con el valor de la fecha actual al DataFrame df_tipos_viaje
+df_tipos_viaje['fecha_hoy'] = fecha_actual
 
 # Imprimimos el DataFrame
 print(df_tipos_viaje)
