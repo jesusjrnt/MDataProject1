@@ -181,10 +181,14 @@ datos_compromiso['id_usuario'] = [f'{i+1:04}' for i in range(len(datos_compromis
 # Mostrar los resultados
 print(datos_compromiso[['puntos_compromiso', 'id_usuario']])
 
+# Unir todos los DataFrames en uno solo
+all_data = pd.concat([data[['puntos_discapacidad', 'id_usuario']],
+                      merged_data[['puntos_esperanza', 'id_usuario']],
+                      datos[['puntos_diferencia_viajes', 'id_usuario']],
+                      datos_compromiso[['puntos_compromiso', 'id_usuario']]])
+
 # Generar una columna 'id_usuario' común con la longitud máxima de todos los DataFrames
 max_length = max(len(data), len(merged_data), len(datos), len(datos_compromiso))
-
-# Crear una serie con valores incrementalmente asignados a 'id_usuario'
 id_usuario_comun = pd.Series([f'{i+1:04}' for i in range(max_length)], name='id_usuario')
 
 # Asignar la serie 'id_usuario_comun' a cada DataFrame
@@ -193,7 +197,7 @@ merged_data['id_usuario'] = id_usuario_comun
 datos['id_usuario'] = id_usuario_comun
 datos_compromiso['id_usuario'] = id_usuario_comun
 
-# Unir todos los DataFrames en uno solo
+# Unir todos los DataFrames en uno solo con la columna 'id_usuario' común
 all_data = pd.concat([data[['puntos_discapacidad', 'id_usuario']],
                       merged_data[['puntos_esperanza', 'id_usuario']],
                       datos[['puntos_diferencia_viajes', 'id_usuario']],
