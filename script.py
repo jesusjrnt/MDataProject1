@@ -21,13 +21,13 @@ with open('df_bbdd.pickle', 'rb') as f:
     df_bbdd = pickle.load(f)
 
 with open('df_esperanza_vida.pickle', 'rb') as f:
-    df_bbdd = pickle.load(f)
+    df_esperanza_vida = pickle.load(f)
 
 with open('df_proximo_viaje.pickle', 'rb') as f:
-    df_bbdd = pickle.load(f)
+    df_proximo_viaje = pickle.load(f)
 
 with open('df_tipos_viaje.pickle', 'rb') as f:
-    df_bbdd = pickle.load(f)
+    df_tipos_viaje = pickle.load(f)
 
 # Insertar el DataFrame df_bbdd en la tabla de la base de datos (PERO ESTO NO FUNCIONA)
 df_bbdd.to_sql('Tipo_de_viaje', con=engine, if_exists='append', index=False)
