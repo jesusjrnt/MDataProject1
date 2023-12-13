@@ -32,7 +32,7 @@ with open('df_tipos_viaje.pickle', 'rb') as f:
 ######
 
 # Seleccionar todas las columnas del DataFrame df_proximo_viaje que sirven para la tabla_proximo_viaje
-columnas_df_proximo_viaje = df_proximo_viaje[['id_provincia', 'provincia', 'plazas_disponibles', 'tipo_de_viaje']]
+columnas_df_proximo_viaje = df_proximo_viaje[['id_usuario', 'id_provincia_proximo_viaje', 'provincia_proximo_viaje', 'plazas_disponibles', 'tipo_de_viaje']]
 
 # Insertar los campos seleccionados en la tabla 'tabla_proximo_viaje' en la base de datos
 columnas_df_proximo_viaje.to_sql('tabla_proximo_viaje', con=engine, if_exists='replace', index=False)
@@ -56,7 +56,7 @@ columnas_df_esperanza_vida.to_sql('tabla_esperanza_de_vida_provincia_sexo', con=
 #######
 
 # Seleccionar todas las columnas del DataFrame df_bbdd que sirven para la tabla_promocion_provincia
-columnas_df_bbdd_03 = df_bbdd[['id_usuario', 'id_provincia']]
+columnas_df_bbdd_03 = df_bbdd[['id_usuario', 'id_provincia', 'provincia']]
 
 # Insertar los campos seleccionados en la tabla 'tabla_tipo_de_viaje' en la base de datos
 columnas_df_bbdd_03.to_sql('tabla_promocion_movilidad', con=engine, if_exists='replace', index=False)
@@ -80,7 +80,7 @@ columnas_df_bbdd_01.to_sql('tabla_compromiso_usuario', con=engine, if_exists='re
 #######
 
 # Seleccionar todas las columnas del DataFrame df_bbdd que sirven para la tabla_diferencia_fechas_viaje
-columnas_df_tipos_viaje_01 = df_tipos_viaje[['id_usuario', 'fecha_ultimo_viaje']]
+columnas_df_tipos_viaje_01 = df_tipos_viaje[['id_usuario', 'fecha_ultimo_viaje', 'fecha_hoy']]
 
 # Insertar los campos seleccionados en la tabla 'tabla_diferencia_fechas_viajes' en la base de datos
 columnas_df_tipos_viaje_01.to_sql('tabla_diferencia_fechas_viajes', con=engine, if_exists='replace', index=False)

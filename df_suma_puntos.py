@@ -134,13 +134,13 @@ datos['fecha_ultimo_viaje'] = pd.to_datetime(datos['fecha_ultimo_viaje'])  # Con
 datos['diferencia_dias'] = (fecha_hoy - datos['fecha_ultimo_viaje']).dt.days  # Calcular la diferencia en días
 
 # Aplicar las condiciones para calcular los puntos del viaje
-datos['puntos_viajes'] = datos['diferencia_dias'] * 0.2739726  # Multiplicar por 0.2739726
+datos['puntos_diferencia_viajes'] = datos['diferencia_dias'] * 0.2739726  # Multiplicar por 0.2739726
 
 # Aplicar la condición de asignar 100 puntos si la diferencia es mayor a 365
-datos.loc[datos['diferencia_dias'] > 365, 'puntos_viajes'] = 100
-datos['puntos_viajes'] *= 0.1  # Multiplicar por 0.1
+datos.loc[datos['diferencia_dias'] > 365, 'puntos_diferencia_viajes'] = 100
+datos['puntos_diferencia_viajes'] *= 0.1  # Multiplicar por 0.1
 # Mostrar los resultados
-print(datos[['puntos_viajes']])
+print(datos[['puntos_diferencia_viajes']])
 
 ################################-----COMPROMISO---###########################
 
@@ -166,36 +166,21 @@ datos['puntos_compromiso'] *= 0.2
 # Mostrar los resultados
 print(datos[['puntos_compromiso']])
 
-##########################-----MOVILIDAD----#######################
+################################-----MOVILIDAD---###########################
 
-consulta_sql = """
+consulta_sql = '''
 SELECT 
-    CASE WHEN pm.id_provincia = pv.provincia THEN 0 ELSE 100 END AS puntos_movilidad
-FROM tabla_promocion_movilidad pm, tabla_proximo_viaje pv
-"""
+    CASE 
+        WHEN pm.id_provincia = pv.id_provincia_proximo_viaje THEN 0 
+        ELSE 100 
+    END AS puntos_movilidad
+FROM tabla_promocion_movilidad pm
+JOIN tabla_proximo_viaje pv ON pm.id_usuario = pv.id_usuario
+'''
 
 # Ejecutar la consulta y obtener los datos en un DataFrame de pandas
 datos = pd.read_sql_query(consulta_sql, engine)
-datos['puntos_movilidad']*= 0.15
+datos['puntos_movilidad'] *= 0.15
+
 # Imprimir los resultados de la variable 'puntos_movilidad'
 print(datos['puntos_movilidad'])
-
-############-----TIPO-VIAJE---############
-
-consulta_sql = """
-SELECT 
-    CASE 
-        WHEN tp.tipo_de_viaje = tv.tipo_viaje_1 THEN 100 - 25
-        WHEN tp.tipo_de_viaje = tv.tipo_viaje_2 THEN 100 - 50
-        WHEN tp.tipo_de_viaje = tv.tipo_viaje_3 THEN 100 - 75
-        WHEN tp.tipo_de_viaje = tv.tipo_viaje_4 THEN 100 - 100
-        ELSE 100 
-    END AS puntos_tipo_viaje
-FROM tabla_tipo_de_viaje tv, tabla_proximo_viaje tp
-"""
-
-# Ejecutar la consulta y obtener los resultados en un DataFrame de pandas
-datos = pd.read_sql_query(consulta_sql,engine)
-datos['puntos_tipo_viaje']*= 0.15
-# Mostrar los resultados de la variable 'puntos_tipo_viaje'
-print(datos['puntos_tipo_viaje'])

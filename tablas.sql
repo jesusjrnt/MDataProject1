@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS tabla_edad_sexo (
 CREATE TABLE IF NOT EXISTS tabla_diferencia_fechas_viajes (
     id_diferencia_fechas_viajes INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario CHAR(4),
-    fecha_ultimo_viaje DATE
+    fecha_ultimo_viaje DATE,
+    fecha_hoy DATE
 );
 
 CREATE TABLE IF NOT EXISTS tabla_compromiso_usuario (
@@ -43,7 +44,8 @@ CREATE TABLE IF NOT EXISTS tabla_compromiso_usuario (
 CREATE TABLE IF NOT EXISTS tabla_promocion_movilidad (
     id_promocion_movilidad INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario CHAR(4),
-    id_provincia INT
+    id_provincia INT,
+    provincia TEXT
 );
 
 CREATE TABLE IF NOT EXISTS tabla_tipo_de_viaje (
@@ -58,8 +60,9 @@ CREATE TABLE IF NOT EXISTS tabla_tipo_de_viaje (
 
 CREATE TABLE IF NOT EXISTS tabla_proximo_viaje (
     id_proximo_viaje INT AUTO_INCREMENT PRIMARY KEY,
-    id_provincia INT,
-    provincia TEXT,
+    id_usuario CHAR(4),
+    id_provincia_proximo_viaje INT,
+    provincia_proximo_viaje TEXT,
     plazas_disponibles INT,
     tipo_de_viaje TEXT
 );
