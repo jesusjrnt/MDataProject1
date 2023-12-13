@@ -11,10 +11,17 @@ CREATE TABLE IF NOT EXISTS tabla_equilibrio_discapacidad (
     d_vida_domestica INT
 );
 
-CREATE TABLE IF NOT EXISTS tabla_esperanza_de_vida (
-    id_esperanza_de_vida INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS tabla_esperanza_de_vida_provincia_sexo (
+    id_esperanza_de_vida_provincia_sexo INT AUTO_INCREMENT PRIMARY KEY,
     id_provincia INT,
     provincia TEXT,
+    hombres TEXT,
+    mujeres TEXT
+);
+
+CREATE TABLE IF NOT EXISTS tabla_edad_sexo (
+    id_edad_sexo INT AUTO_INCREMENT PRIMARY KEY,
+    id_provincia INT,
     sexo TEXT,
     edad_en_dias INT,
     enfermedad_terminal_en_dias INT
@@ -33,7 +40,7 @@ CREATE TABLE IF NOT EXISTS tabla_compromiso_usuario (
     fecha_cancelacion DATE
 ); 
 
-CREATE TABLE IF NOT EXISTS tabla_promocion_Movilidad (
+CREATE TABLE IF NOT EXISTS tabla_promocion_movilidad (
     id_promocion_movilidad INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario CHAR(4),
     id_provincia INT
@@ -45,8 +52,7 @@ CREATE TABLE IF NOT EXISTS tabla_tipo_de_viaje (
     tipo_viaje_1 TEXT,
     tipo_viaje_2 TEXT,
     tipo_viaje_3 TEXT,
-    tipo_viaje_4 TEXT,
-    tipo_viaje_5 TEXT
+    tipo_viaje_4 TEXT
 
 );
 
