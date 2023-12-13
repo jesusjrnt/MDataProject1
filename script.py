@@ -29,11 +29,30 @@ with open('df_proximo_viaje.pickle', 'rb') as f:
 with open('df_tipos_viaje.pickle', 'rb') as f:
     df_tipos_viaje = pickle.load(f)
 
-# Seleccionar la columna 'tipo_viaje_1' del DataFrame df_tipos_viaje
-columna_tipo_viaje_1 = df_tipos_viaje['tipo_viaje_1']
+# Seleccionar todas las columnas del DataFrame df_tipos_viaje que sirven para la tabla_tipo_de_viaje
+columnas_df_tipos_viaje = df_tipos_viaje[['id_usuario', 'tipo_viaje_1', 'tipo_viaje_2', 'tipo_viaje_3', 'tipo_viaje_4', 'tipo_viaje_5']]
 
-# Insertar la columna 'tipo_viaje_1' en la tabla 'tabla_tipo_de_viaje' en la base de datos
-columna_tipo_viaje_1.to_sql('tabla_tipo_de_viaje', con=engine, if_exists='append', index=False)
+# Insertar los campos seleccionados en la tabla 'tabla_tipo_de_viaje' en la base de datos
+columnas_df_tipos_viaje.to_sql('tabla_tipo_de_viaje', con=engine, if_exists='append', index=False)
+
+# Seleccionar todas las columnas del DataFrame df_bbdd que sirven para la tabla_compromiso_usuario
+columnas_df_bbdd_01 = df_bbdd[['id_usuario', 'valoracion_usuario', 'fecha_cancelacion']]
+
+# Insertar los campos seleccionados en la tabla 'tabla_compromiso_usuario' en la base de datos
+columnas_df_bbdd_01.to_sql('tabla_compromiso_usuario', con=engine, if_exists='append', index=False)
+
+# Seleccionar todas las columnas del DataFrame df_bbdd que sirven para la tabla_diferencia_fechas_viaje
+columnas_df_tipos_viaje_01 = df_tipos_viaje[['id_usuario', 'fecha_ultimo_viaje']]
+
+# Insertar los campos seleccionados en la tabla 'tabla_diferencia_fechas_viajes' en la base de datos
+columnas_df_tipos_viaje_01.to_sql('tabla_diferencia_fechas_viajes', con=engine, if_exists='append', index=False)
+
+# Seleccionar todas las columnas del DataFrame df_bbdd que sirven para la tabla_equilibrio_discapacidad
+columnas_df_bbdd_02 = df_bbdd[['id_usuario', 'd_movilidad', 'd_aprendizaje', 'd_comunicacion', 'd_relaciones_sociales', 'd_autocuidado', 'd_vision', 'd_audicion', 'd_vida_domestica']]
+
+# Insertar los campos seleccionados en la tabla 'tabla_equilibrio_discapacidad' en la base de datos
+columnas_df_bbdd_02.to_sql('tabla_equilibrio_discapacidad', con=engine, if_exists='append', index=False)
+
 
 # Cierra la conexión después de realizar la inserción
 engine.dispose()
