@@ -40,7 +40,7 @@ columnas_df_proximo_viaje.to_sql('tabla_proximo_viaje', con=engine, if_exists='r
 ######
 
 # Seleccionar todas las columnas del DataFrame df_bbdd que sirven para la tabla_edad_sexo
-columnas_df_bbdd_04 = df_bbdd[['id_provincia', 'sexo', 'edad_en_dias', 'enfermedad_terminal_en_dias']]
+columnas_df_bbdd_04 = df_bbdd[['id_usuario', 'id_provincia', 'sexo', 'edad_en_dias', 'enfermedad_terminal_en_dias']]
 
 # Insertar los campos seleccionados en la tabla 'tabla_esperanza_de_vida_provincia_sexo' en la base de datos
 columnas_df_bbdd_04.to_sql('tabla_edad_sexo', con=engine, if_exists='replace', index=False)
